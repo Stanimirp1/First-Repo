@@ -1,7 +1,52 @@
-Change here...
-Updating with new line here
-Tortoise...
-Dots here...
-Updating with Bash…
-Update with Tortoise…
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+
+namespace MostFrequentNumber
+{
+    class Program
+    {
+        static void Main()
+        {
+            string[] input = File.ReadAllText("Input.txt").Split(new char[] { '\n', '\r', ' ', '.', ',', '!', '?', '-' }, StringSplitOptions.RemoveEmptyEntries);
+            var asInt = input.Select(s => int.Parse(s)).ToArray();
+            int[] M = asInt;
+            int x;
+            int f = MyMath.MostFreq(M, out x);
+            Console.WriteLine("The number {0} is the most frequent (occurs {1} times)", x, f);
+        }
+    }
+    class MyMath
+    {
+        public static int MostFreq(int[] _M, out int x)
+        {
+            int Max_Freq, No_Freq, i, k;
+            Array.Sort(_M);
+            k = _M[0];
+            Max_Freq = 0; i = 0; x = 0;
+            while (i < _M.Length)
+            {
+                No_Freq = 0;
+                while (k == _M[i])
+                {
+                    No_Freq++;
+                    i++;
+                    if (i == _M.Length)
+                        break;
+                }
+                if (No_Freq > Max_Freq)
+                {
+                    Max_Freq = No_Freq;
+                    x = k;
+                }
+                if (i < _M.Length) k = _M[i];
+            }
+            return (Max_Freq);
+        }
+    }
+}
 
